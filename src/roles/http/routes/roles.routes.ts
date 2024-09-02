@@ -8,7 +8,13 @@ rolesRouter.post('/', (request, response) => {
   const { name } = request.body;
   const role = rolesRepository.create({ name });
 
-  return response.status(201).json({ role });
+  return response.status(201).json(role);
+});
+
+rolesRouter.get('/', (request, response) => {
+  const roles = rolesRepository.findAll();
+
+  return response.json(roles); //status = 200 é padrao de 'sucess'
 });
 
 export { rolesRouter };
