@@ -8,7 +8,9 @@
   "paths": {
     "/roles": {
       "post": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "summary": "create a role",
         "description": "Create a new role",
         "requestBody": {
@@ -27,22 +29,40 @@
         },
         "responses": {
           "201": {
-            "description": "Role created."
+            "description": "Role created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Role already exists"
           }
         }
-
-
       },
       "get": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "summary": "List all roles",
         "description": "Returns all roles paginated",
         "responses": {
           "200": {
-          "description": "Sucess."
+            "description": "Sucess."
           }
         }
       }
