@@ -1,45 +1,28 @@
 import { Role } from '@roles/entities/Role';
 import { dataSource } from '@shared/typeorm';
 import { Repository } from 'typeorm';
+import {
+  CreateRoleDTO,
+  IRolesRepository,
+  PaginateParams,
+  RolesPaginateProperties,
+} from './IRolesRepository';
 
 //Repository é uma classe responsável por realizar toda e qualquer manipulação dos dados na estrutura de dados.
 //Este tipo de classe implementa métodos como: criar um registro, exibir um registro, apagar um registro, listar registros etc.
 
-type CreateRoleDTO = {
-  name: string;
-};
-
-export type PaginateParams = {
-  page: number;
-  skip: number;
-  take: number;
-};
-export type RolesPaginateProperties = {
-  per_page: number;
-  total: number;
-  current_page: number;
-  data: Role[];
-};
-
-export class RolesRepository {
+export class RolesRepository implements IRolesRepository {
   private repository: Repository<Role>;
-  private static INSTANCE: RolesRepository;
 
-  private constructor() {
+  constructor() {
     this.repository = dataSource.getRepository(Role);
-  }
-
-  public static getInstance(): RolesRepository {
-    if (!RolesRepository.INSTANCE) {
-      RolesRepository.INSTANCE = new RolesRepository();
-    }
-    return RolesRepository.INSTANCE;
   }
 
   async create({ name }: CreateRoleDTO): Promise<Role> {
     const role = this.repository.create({ name });
     return this.repository.save(role);
   }
+
   async save(role: Role): Promise<Role> {
     return this.repository.save(role);
   }
