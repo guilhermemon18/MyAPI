@@ -5,6 +5,7 @@ import { IUsersRepository } from '@users/repositories/IUsersRepository';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
+
 type CreateLoginDTO = {
   email: string;
   password: string;
