@@ -3,6 +3,7 @@ import { DeleteRoleController } from '@roles/useCases/deleteRole/DeleteRoleContr
 import { ListRolesController } from '@roles/useCases/listRoles/ListRolesController';
 import { ShowRoleController } from '@roles/useCases/showRole/ShowRoleController';
 import { UpdateRoleController } from '@roles/useCases/updateRole/UpdateRoleController';
+import { isAuthenticated } from '@shared/http/middlewares/isAuthenticated';
 import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
 import { container } from 'tsyringe';
@@ -13,6 +14,9 @@ const listRolesController = container.resolve(ListRolesController);
 const showRolesController = container.resolve(ShowRoleController);
 const updateRolesController = container.resolve(UpdateRoleController);
 const deleteRolesController = container.resolve(DeleteRoleController);
+
+//middleware de autenticação:
+rolesRouter.use(isAuthenticated);
 
 rolesRouter.post(
   '/',
