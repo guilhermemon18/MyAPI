@@ -1,15 +1,20 @@
+import uploadConfig from '@config/upload';
 import { isAuthenticated } from '@shared/http/middlewares/isAuthenticated';
 import { CreateLoginController } from '@users/useCases/createLogin/CreateLoginController';
 import { CreateUserController } from '@users/useCases/createUser/CreateUserController';
 import { ListUsersController } from '@users/useCases/listUsers/ListUsersController';
+import { UpdateAvatarController } from '@users/useCases/updateAvatar/UpdateAvatarController';
 import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
+import multer from 'multer';
 import { container } from 'tsyringe';
 
 const usersRouter = Router();
 const createUserController = container.resolve(CreateUserController);
 const listUsersController = container.resolve(ListUsersController);
 const createLoginController = container.resolve(CreateLoginController);
+const updateAvatarController = container.resolve(UpdateAvatarController);
+const upload = multer(uploadConfig);
 
 usersRouter.post(
   '/',
@@ -52,6 +57,15 @@ usersRouter.post(
   }),
   (request, response) => {
     return createLoginController.handle(request, response);
+  },
+);
+
+usersRouter.patch(
+  '/avatar',
+  isAuthenticated,
+  upload.single('avatar'),
+  (request, response) => {
+    return updateAvatarController.handle(request, response);
   },
 );
 
