@@ -1,5 +1,5 @@
 import { Role } from '@roles/entities/Role';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -37,6 +37,14 @@ export class User {
     cascade: true,
   })
   role: Role;
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarUrl(): string | null {
+    if (!this.avatar) {
+      return null;
+    }
+    return `${process.env.AVATAR_URL}/${this.avatar}`;
+  }
 
   constructor() {
     if (!this.id) {
