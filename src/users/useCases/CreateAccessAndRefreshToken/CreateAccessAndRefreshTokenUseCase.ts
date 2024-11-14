@@ -5,18 +5,15 @@ import { IRefreshTokenRepository } from '@users/repositories/IRefreshTokenReposi
 import { IUsersRepository } from '@users/repositories/IUsersRepository';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
-
 type CreateAccessAndRefreshTokenDTO = {
   user_id: string;
   refresh_token: string;
 };
-
 type IResponse = {
   user: User;
   accessToken: string;
   refreshToken: string;
 };
-
 @injectable()
 export class CreateAccessAndRefreshTokenUseCase {
   constructor(
@@ -24,7 +21,6 @@ export class CreateAccessAndRefreshTokenUseCase {
     @inject('RefreshTokenRepository')
     private refreshTokenRepository: IRefreshTokenRepository,
   ) {}
-
   public async execute({
     user_id,
     refresh_token,
